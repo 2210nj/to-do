@@ -13,7 +13,7 @@ function Todo(props) {
     // <div>
     //   <li>{props.text}</li>
     // </div>
-    <List>
+    <List className="todo__list">
       <ListItem>
         <ListItemAvatar></ListItemAvatar>
         <ListItemText   primary={props.text} secondary="dummy deadline ⏰ "></ListItemText>
