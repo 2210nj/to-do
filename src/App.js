@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     db.collection("todos")
-      .orderBy('timestamp', 'desc')
+      .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         console.log(snapshot);
         setTodos(snapshot.docs.map((doc) => doc.data().todo));
