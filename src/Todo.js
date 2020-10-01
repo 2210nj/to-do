@@ -11,38 +11,51 @@ import "./Todo.css";
 import React, { useState } from "react";
 import firebase from "firebase";
 
-
 function Todo(props) {
   const [completedTodos, setCompletedTodos] = useState([]);
   const completeTodo = (event) => {
     //add item in completedTodos
-    addTaskToCompletedList(db.collection('todos').doc(props.text))
+    addTaskToCompletedList(db.collection("todos").doc('props.taskValue'));
     //delete item from todos
-    db.collection("todos").doc(props.text).delete(); //currently not working
+    db.collection('todos')
+      .doc('props.todo.taskValue')
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
   };
 
+  // db.collection("todos").add({
+  //   taskValue: input,
+  //   taskId: date.getTime(),
+  //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+  // });
+
+
   const addTaskToCompletedList = (todo) => {
-    console.log('Hello There', props.text);
+    console.log("Hello There", props);
+    const date = new Date();
     db.collection("completedTodos").add({
-      todo: props.text,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      taskValue: props.taskValue,
+      taskId: date.getTime(),
+      timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    setCompletedTodos([...completedTodos, props.text]);
+    setCompletedTodos([...completedTodos, props.taskValue]);
   };
 
   return (
     <div>
       <List className="todo__list">
         <ListItem>
-          <ListItemText
-            primary={props.text}
-          ></ListItemText>
+          <ListItemText primary={props.taskValue}></ListItemText>
           <Button color="secondary" onClick={completeTodo}>
             Delete
           </Button>
         </ListItem>
       </List>
-      
     </div>
   );
 }
