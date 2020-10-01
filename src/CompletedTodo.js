@@ -3,13 +3,14 @@ import "./CompletedTodo.css";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
 function CompletedTodo(props) {
+    console.log('Hmmm Namita');
   return (
     <div>
       <List className="todo__list completed__list">
         <ListItem>
           <ListItemText
             className="completed__listitem"
-            primary={props.taskValue}
+            primary={props.todo}
           ></ListItemText>
         </ListItem>
       </List>

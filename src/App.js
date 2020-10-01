@@ -16,15 +16,16 @@ function App() {
     db.collection("todos")
       .orderBy("timeStamp", "desc")
       .onSnapshot((snapshot) => {
-        console.log(snapshot);
-        setTodos(snapshot.docs.map((doc) => doc.data().taskValue));
+        console.log(snapshot.docs.map((doc) => doc.data()));
+        setTodos(snapshot.docs.map((doc) => ({id: doc.id ,todo: doc.data().todo})));
       });
 
-    db.collection("completedTodos")
+
+      db.collection("completedTodos")
       .orderBy("timeStamp", "desc")
       .onSnapshot((snapshot) => {
         console.log(snapshot);
-        setcompletedTodos(snapshot.docs.map((doc) => doc.data().taskValue));
+        setcompletedTodos(snapshot.docs.map((doc) => doc.data().todo));
       });
   }, []);
 
@@ -32,8 +33,7 @@ function App() {
     event.preventDefault();
     const date = new Date();
     db.collection("todos").add({
-      taskValue: input,
-      taskId: date.getTime(),
+      todo: input,
       timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setTodos([...todos, input]);
@@ -62,14 +62,15 @@ function App() {
       </form>
       <ul>
         {todos.map((todo) => (
-          <Todo taskValue={todo} />
-
+          <div>
+            <Todo todo={todo}></Todo>
+          </div>
         ))}
       </ul>
       <p>My completed todos</p>
       <ul>
-        {completedTodos.map((taskValue) => (
-          <CompletedTodo taskValue={taskValue} />
+        {completedTodos.map((completedTodo) => (
+          <CompletedTodo todo={completedTodo} />
         ))}
       </ul>
     </div>
