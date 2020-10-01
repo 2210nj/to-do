@@ -1,3 +1,7 @@
 .todo__list{
     text-align: center;
 }
+
+.completed__listitem{
+    text-decoration: line-through;
+}

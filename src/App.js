@@ -5,9 +5,11 @@ import { FormControl, InputLabel, Input } from "@material-ui/core";
 import Todo from "./Todo";
 import db from "./firebase";
 import firebase from "firebase";
+import CompletedTodo from "./CompletedTodo";
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [completedTodos, setcompletedTodos] = useState([]);
   const [input, setInput] = useState("");
 
   useEffect(() => {
@@ -16,6 +18,13 @@ function App() {
       .onSnapshot((snapshot) => {
         console.log(snapshot);
         setTodos(snapshot.docs.map((doc) => doc.data().todo));
+      });
+
+    db.collection("completedTodos")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        console.log(snapshot);
+        setcompletedTodos(snapshot.docs.map((doc) => doc.data().todo));
       });
   }, []);
 
@@ -52,6 +61,12 @@ function App() {
       <ul>
         {todos.map((todo) => (
           <Todo text={todo} />
+        ))}
+      </ul>
+      <p>My completed todos</p>
+      <ul>
+        {completedTodos.map((todo) => (
+          <CompletedTodo text={todo} />
         ))}
       </ul>
     </div>
