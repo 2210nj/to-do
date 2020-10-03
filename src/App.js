@@ -12,11 +12,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AddTodo from "./AddTodo";
+import FullScreenDialog from "./FullScreenDialog";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [completedTodos, setcompletedTodos] = useState([]);
   const [input, setInput] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     db.collection("todos")
@@ -52,7 +55,12 @@ function App() {
   };
 
   const onAddClick = () => {
+    setOpen(true);
     console.log("You just clicked on Add icon");
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const onMoreOptionsClick = () => {
@@ -79,6 +87,10 @@ function App() {
           <IconButton onClick={onMoreOptionsClick}>
             <MoreVertIcon />
           </IconButton>
+          {open ?
+           <AddTodo open={open}/> :
+           null
+        }
         </div>
       </div>
 
