@@ -1,18 +1,23 @@
 .app {
-  margin-top: 50px;
+  /* margin-top: 50px; */
   display: flex;
   flex-direction: column;
   place-items: center;
   height: 90vh;
 }
 
+
 .app__container{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   background-color: #ededed;
   align-items: center;
   max-width: 300px;
-  box-shadow: -1px 4px 20px -6px black;
+  box-shadow: -1px 4px 20px -6px black; */
+  width: 50vw;
+  height: 100vh;
+
+
 }
 
 .app__header {
@@ -28,11 +33,25 @@
 
 .app__image {
   height: auto;
-  width: 60%;
+  width: 35%;
+
+  /* width:49%; */
 }
 
 .app__footer {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.app__motivationText{
+  text-align: center;
+  width: 100%;
+}
+
+@media only screen and (max-width: 727px) {
+  .app__image {
+    height: auto;
+    width: 85vw;
+  }
 }

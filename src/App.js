@@ -7,19 +7,20 @@ import db from "./firebase";
 import firebase from "firebase";
 import CompletedTodo from "./CompletedTodo";
 import { Image } from "@material-ui/icons";
-import image from "./images/desk-image.png";
+import image from "./images/desk.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import AddTodo from "./AddTodo";
 import FullScreenDialog from "./FullScreenDialog";
+import FormDialog from "./FormDialog";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [completedTodos, setcompletedTodos] = useState([]);
   const [input, setInput] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     db.collection("todos")
@@ -66,19 +67,41 @@ function App() {
   const onMoreOptionsClick = () => {
     console.log("You just clicked on More Options icon");
   };
+
   return (
     <div className="app">
       <div className="app__container">
         <div className="app__header">
           <h2>My Tasks</h2>
         </div>
-        <div className="app__body">
-          <img className="app__image" src={image} />
-          <p>Let's get some work done..</p>
-          <p>Anything to add?</p>
-        </div>
+        {todos.length ? (
+          <div className="app__body">
+            <ul>
+              {todos.map((todo) => (
+                <div>
+                  <Todo todo={todo}></Todo>
+                </div>
+              ))}
+            </ul>
+            <p>My completed todos</p>
+            <ul>
+              {completedTodos.map((completedTodo) => (
+                <CompletedTodo todo={completedTodo} />
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="app__body">
+            <img className="app__image" src={image} alt="https://favpng.com/" />
+            <div class="app__motivationText">
+              <p>Let's get some work done..</p>
+              <p>Anything to add?</p>
+            </div>
+          </div>
+        )}
+
         <div className="app__footer">
-          <IconButton onClick={onMenuClick}>
+          <IconButton onClick={onMenuClick} className="icons">
             <MenuIcon />
           </IconButton>
           <IconButton>
@@ -87,10 +110,7 @@ function App() {
           <IconButton onClick={onMoreOptionsClick}>
             <MoreVertIcon />
           </IconButton>
-          {open ?
-           <AddTodo open={open}/> :
-           null
-        }
+          {open ? <FormDialog open={open} /> : null}
         </div>
       </div>
 
