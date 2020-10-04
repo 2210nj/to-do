@@ -61,9 +61,16 @@ function App() {
     console.log("You just clicked on More Options icon");
   };
 
-  const onCompletedClick =() => {
+  const onCompletedClick = () => {
     setShowCompletedTodos(!showCompletedTodos);
-  }
+  };
+
+  const showTodos = () => {
+    if (todos.length) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="app">
@@ -71,8 +78,8 @@ function App() {
         <div className="app__header">
           <h2>My Tasks</h2>
         </div>
-        {todos.length || completedTodos.length ? (
-          <div className="app__body">
+        <div className="app__body">
+          {showTodos ? (
             <ul>
               {todos.map((todo) => (
                 <div>
@@ -80,26 +87,37 @@ function App() {
                 </div>
               ))}
             </ul>
-            <div onClick={onCompletedClick}>
-              Completed ( {completedTodos.length} )
+          ) : null}
+
+          {completedTodos.length ? (
+            <div>
+              <div onClick={onCompletedClick}>
+                Completed ( {completedTodos.length} )
+              </div>
+              {showCompletedTodos ? (
+                <ul>
+                  {completedTodos.map((completedTodo) => (
+                    <CompletedTodo todo={completedTodo} />
+                  ))}
+                </ul>
+              ) : null}
             </div>
-            {showCompletedTodos ? (
-              <ul>
-                {completedTodos.map((completedTodo) => (
-                  <CompletedTodo todo={completedTodo} />
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ) : (
-          <div className="app__body">
-            <img className="app__image" src={image} alt="https://favpng.com/" />
-            <div class="app__motivationText">
-              <p>Let's get some work done..</p>
-              <p>Anything to add?</p>
+          ) : null}
+
+          {/* {!todos.length && !completedTodos.length ? (
+            <div>
+              <img
+                className="app__image"
+                src={image}
+                alt="https://favpng.com/"
+              />
+              <div class="app__motivationText">
+                <p>Let's get some work done..</p>
+                <p>Anything to add?</p>
+              </div>
             </div>
-          </div>
-        )}
+          ) : null} */}
+        </div>
 
         <div className="app__footer">
           <IconButton onClick={onMenuClick} className="icons">
@@ -112,7 +130,7 @@ function App() {
             <MoreVertIcon />
           </IconButton>
           {open}
-          {open ? <FormDialog open={open} setOpen={setOpen}/> : null}
+          {open ? <FormDialog open={open} setOpen={setOpen} /> : null}
         </div>
       </div>
     </div>

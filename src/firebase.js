@@ -15,5 +15,4 @@ const firebaseApp = firebase.initializeApp({
 });
 
 const db = firebaseApp.firestore();
-    console.log('namita   ++++++ db', db);
 export default db;

@@ -58,7 +58,7 @@ export default function FormDialog(props, state) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleAdd} color="primary">
+          <Button disabled={!input} onClick={handleAdd} color="primary">
             Add
           </Button>
         </DialogActions>
