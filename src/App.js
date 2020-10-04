@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Button from "@material-ui/core/Button";
-import { FormControl, InputLabel, Input } from "@material-ui/core";
 import Todo from "./Todo";
 import db from "./firebase";
 import firebase from "firebase";
 import CompletedTodo from "./CompletedTodo";
-import { Image } from "@material-ui/icons";
 import image from "./images/desk.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import AddTodo from "./AddTodo";
-import FullScreenDialog from "./FullScreenDialog";
+
 import FormDialog from "./FormDialog";
 
 function App() {
@@ -59,10 +55,6 @@ function App() {
   const onAddClick = () => {
     setOpen(true);
     console.log("You just clicked on Add icon");
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const onMoreOptionsClick = () => {

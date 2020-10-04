@@ -16,8 +16,6 @@
   box-shadow: -1px 4px 20px -6px black; */
   width: 50vw;
   height: 100vh;
-
-
 }
 
 .app__header {
@@ -34,8 +32,6 @@
 .app__image {
   height: auto;
   width: 35%;
-
-  /* width:49%; */
 }
 
 .app__footer {
