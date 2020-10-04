@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,26 +9,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import db from "./firebase";
 import firebase from "firebase";
 
-export default function FormDialog(props) {
-  
+export default function FormDialog(props, state) {
   const [todos, setTodos] = useState([]);
-  console.log('my props',props)
-  const [open, setOpen] = React.useState(false);
   const [input, setInput] = useState("");
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
-    setOpen(false);
+    props.setOpen(false);
   };
 
   const handleAdd = (event) => {
-    console.log('add clicked');
-    addToDo(event)
+    addToDo(event);
     handleClose();
-  }
+  };
 
   const addToDo = (event) => {
     event.preventDefault();
@@ -43,11 +35,8 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog
-        open={open}
+        open={props.open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >

@@ -21,6 +21,7 @@ function App() {
   const [completedTodos, setcompletedTodos] = useState([]);
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
+  const [showCompletedTodos, setShowCompletedTodos] = useState(false);
 
   useEffect(() => {
     db.collection("todos")
@@ -68,13 +69,17 @@ function App() {
     console.log("You just clicked on More Options icon");
   };
 
+  const onCompletedClick =() => {
+    setShowCompletedTodos(!showCompletedTodos);
+  }
+
   return (
     <div className="app">
       <div className="app__container">
         <div className="app__header">
           <h2>My Tasks</h2>
         </div>
-        {todos.length ? (
+        {todos.length || completedTodos.length ? (
           <div className="app__body">
             <ul>
               {todos.map((todo) => (
@@ -83,12 +88,16 @@ function App() {
                 </div>
               ))}
             </ul>
-            <p>My completed todos</p>
-            <ul>
-              {completedTodos.map((completedTodo) => (
-                <CompletedTodo todo={completedTodo} />
-              ))}
-            </ul>
+            <div onClick={onCompletedClick}>
+              Completed ( {completedTodos.length} )
+            </div>
+            {showCompletedTodos ? (
+              <ul>
+                {completedTodos.map((completedTodo) => (
+                  <CompletedTodo todo={completedTodo} />
+                ))}
+              </ul>
+            ) : null}
           </div>
         ) : (
           <div className="app__body">
@@ -110,41 +119,10 @@ function App() {
           <IconButton onClick={onMoreOptionsClick}>
             <MoreVertIcon />
           </IconButton>
-          {open ? <FormDialog open={open} /> : null}
+          {open}
+          {open ? <FormDialog open={open} setOpen={setOpen}/> : null}
         </div>
       </div>
-
-      {/* <form>
-        <FormControl>
-          <InputLabel>✅ Write a to-do</InputLabel>
-          <Input
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-          />
-          <Button
-            type="submit"
-            disabled={!input}
-            onClick={addToDo}
-            variant="contained"
-            color="primary"
-          >
-            Add
-          </Button>
-        </FormControl>
-      </form>
-      <ul>
-        {todos.map((todo) => (
-          <div>
-            <Todo todo={todo}></Todo>
-          </div>
-        ))}
-      </ul>
-      <p>My completed todos</p>
-      <ul> 
-        {completedTodos.map((completedTodo) => (
-          <CompletedTodo todo={completedTodo} />
-        ))}
-      </ul>*/}
     </div>
   );
 }
